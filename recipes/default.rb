@@ -19,13 +19,15 @@
 
 require 'digest/sha1'
 
+include_recipe 'yum-epel'
+
 # PHP Recipe includes we already know PHPMyAdmin needs
 if node['phpmyadmin']['stand_alone'] then
 	include_recipe 'php'
-	include_recipe 'php::module_mbstring'
-	include_recipe 'php::module_mcrypt'
-	include_recipe 'php::module_gd'
-	include_recipe 'php::module_mysql'
+	package 'php-mbstring'
+	package 'php-mcrypt'
+	package 'php-gd'
+	package 'php-mysql'
 
 	directory node['phpmyadmin']['upload_dir'] do
 		owner 'root'
@@ -115,25 +117,4 @@ template "#{home}/config.inc.php" do
 	group group
 	cookbook node['phpmyadmin']['config_template_cookbook']
 	mode 00644
-end
-
-if (node['phpmyadmin'].attribute?('fpm') && node['phpmyadmin']['fpm'])
- 	php_fpm 'phpmyadmin' do
-	  action :add
-	  user user
-	  group group
-	  socket true
-	  socket_path node['phpmyadmin']['socket']
-	  socket_user user
-	  socket_group group
-	  socket_perms '0666'
-	  start_servers 2
-	  min_spare_servers 2
-	  max_spare_servers 8
-	  max_children 8
-	  terminate_timeout (node['php']['ini_settings']['max_execution_time'].to_i + 20)
-	  value_overrides({
-	    :error_log => "#{node['php']['fpm_log_dir']}/phpmyadmin.log"
-	  })
-	end
 end
