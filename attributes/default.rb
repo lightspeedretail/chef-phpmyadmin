@@ -22,7 +22,6 @@ default['phpmyadmin']['checksum'] = '2e5c2ca358d9510c793bb709338f0836c56f4c15101
 default['phpmyadmin']['mirror'] = 'https://files.phpmyadmin.net/phpMyAdmin/'
 default['phpmyadmin']['server_name'] = node['fqdn']
 
-default['phpmyadmin']['fpm'] = true
 default['phpmyadmin']['stand_alone'] = true
 
 default['phpmyadmin']['home'] = '/opt/phpmyadmin'

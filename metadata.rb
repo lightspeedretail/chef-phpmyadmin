@@ -7,6 +7,7 @@ long_description   IO.read(File.join(File.dirname(__FILE__), 'README.md')).chomp
 version            IO.read(File.join(File.dirname(__FILE__), 'VERSION')).chomp rescue '0.1.0'
 
 depends           'php'
+depends           'yum-epel'
 
 recommends        'nginx'
 recommends        'apache2'
@@ -31,11 +32,6 @@ attribute 'phpmyadmin/mirror',
   :display_name => 'PHPMyAdmin download mirror',
   :description => 'The desired PMA download mirror',
   :default => 'https://files.phpmyadmin.net/phpMyAdmin/'
-
-attribute 'phpmyadmin/fpm',
-  :display_name => 'PHPMyAdmin FPM instance',
-  :description => 'Enables the PMA FPM instance for serving via NGINX',
-  :default => 'true'
 
 attribute 'phpmyadmin/home',
   :display_name => 'PHPMyAdmin home',
